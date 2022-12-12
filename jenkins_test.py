@@ -26,3 +26,4 @@ data ={
 
 response = requests.post("https://petstore.swagger.io/v2/pet", json = data, headers = headers)
 pet_id = response.json()["id"]
+print(pet_id)
