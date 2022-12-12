@@ -1,29 +1,10 @@
-import requests
+from jenkins import get_users
 
-headers={
+def test_users_page():
+	assert 2 == get_users()["page"]
 
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
-}
+def test_users_per_page():
+	assert 6 == get_users()["per_page"]
 
-data ={
-  "id": 0,
-  "category": {
-    "id": 12,
-    "name": "dog"
-  },
-  "name": "puppy",
-  "photoUrls": [
-    "none"
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "name": "newdog"
-    }
-  ],
-  "status": "available"
-}
-
-response = requests.post("https://petstore.swagger.io/v2/pet", json = data, headers = headers)
-pet_id = response.json()["id"]
-print(pet_id)
+def test_users_total():
+	assert 12 == get_users()["total"]
