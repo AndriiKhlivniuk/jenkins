@@ -30,6 +30,6 @@ def test_bitcoin_wikipedia(duck_start):
     page.click('#search_button_homepage')
     page.click('//span[normalize-space()="Bitcoin - Wikipedia"]')
     main_title = page.locator("//span[@class='mw-page-title-main']").inner_text()
-    assert main_title == "Etherium"
+    assert main_title == "Bitcoin"
 
 
