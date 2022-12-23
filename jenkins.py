@@ -45,4 +45,4 @@ def external_urls(url):
   for url in external_urls:
     print (url)
 
-external_urls("https://reddit.com")
+external_urls("https://webscraper.io")
