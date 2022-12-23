@@ -1,23 +1,48 @@
 import requests 
 import logging
+from bs4 import BeautifulSoup
+import json
+import http 
+from urllib.parse import urlparse, urljoin
+import re
 
-logging.basicConfig(level=logging.INFO, filename='results.log', encoding='utf-8')
+def external_urls(url):
 
-def get_users():
-	response = requests.get("https://reqres.in/api/users?page=2")
-	return response.json()
+  params=urlparse(url)
+  domain_name = params.netloc
+  scheme = params.netloc
+  req = requests.get(url)
+  soup = BeautifulSoup(req.text, "html.parser")
+  # scrap page title
+  title = soup.title.text
+  print(title)
+  external_urls = set()
 
-def api_requests():
-    response = requests.get("https://jsonplaceholder.typicode.com/posts")
-    logging.info(str(response.json()))
-    print(response.json())
+  for a_tag in soup.findAll("a"):
 
-    response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
-    logging.info(str(response.json()))
-    print(response.json())
+      href = a_tag.attrs.get("href")
 
-    response = requests.get("https://jsonplaceholder.typicode.com/posts/2/comments")
-    logging.info(str(response.json()))
-    print(response.json())
+      if href == "" or href is None:
+          # href empty tag
+          continue
+  
+      # join the URL if it's relative (not absolute link)
+      href = urljoin(url, href)
+      parsed_href = urlparse(href)
+      # remove URL GET parameters, URL fragments, etc.
+      href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
 
-api_requests()
+      # already in the set
+      if href in external_urls:
+          continue
+
+      # external link
+      if domain_name in href:
+          continue
+
+      external_urls.add(href)
+
+  for url in external_urls:
+    print (url)
+
+external_urls("https://reddit.com")
