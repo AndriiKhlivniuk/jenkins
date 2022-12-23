@@ -8,28 +8,16 @@ def get_users():
 	return response.json()
 
 def api_requests():
-	response = requests.get("https://reqres.in/api/users/2")
-	logging.info(str(response.json()))
-	print(response.json())
+    response = requests.get("https://jsonplaceholder.typicode.com/posts")
+    logging.info(str(response.json()))
+    print(response.json())
 
-	data = {
-	    "name": "John",
-	    "job": "Architect"
-	}
-	
-	response = requests.post("https://reqres.in/api/users", json = data)
-	logging.info(str(response.json()))
-	print(response.json())
-	data = {
-	    "name": "John",
-	    "job": "Programmer"
-	}
-	response = requests.patch("https://reqres.in/api/users/2", json = data)
-	logging.info(str(response.json()))
-	print(response.json())
+    response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
+    logging.info(str(response.json()))
+    print(response.json())
 
-	response = requests.get("https://reqres.in/api/users")
-	logging.info(str(response.json()))
-	print(response.json())
+    response = requests.get("https://jsonplaceholder.typicode.com/posts/2/comments")
+    logging.info(str(response.json()))
+    print(response.json())
 
 api_requests()
